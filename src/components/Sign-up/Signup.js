@@ -15,8 +15,7 @@ const Signup = () => {
         <div className="signup-container">
             <div className="signup-box">
                 {/* 로고 */}
-                <img src="/logo.png" alt="Resumate Logo" className="signup-logo" />
-                <h1 className="signup-title">Resumate</h1>
+                <img src="/hamlogo.png" alt="Resumate Logo" className="signup-logo" />
 
                 {/* 입력 필드 */}
                 <input

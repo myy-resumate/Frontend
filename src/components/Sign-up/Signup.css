@@ -15,19 +15,15 @@
     padding: 2rem;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    transform: scale(1.1);
+    /* 1.2배 확대 */
+    transform-origin: center;
 }
 
 .signup-logo {
-    width: 100px;
+    width: 150px;
     margin-bottom: 10px;
-}
-
-.signup-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
 }
 
 .signup-input {
@@ -49,17 +45,17 @@
 .signup-button {
     width: 100%;
     padding: 10px;
-    background-color: #facc15;
+    background-color: #FFE38E;
     /* 노란색 */
     color: black;
     font-weight: bold;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
 .signup-button:hover {
-    background-color: #eab308;
+    background-color: #FDCB33;
     /* 좀 더 진한 노란색 */
 }
