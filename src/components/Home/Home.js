@@ -5,6 +5,7 @@ import Footer from "../common/Footer";
 import Calendar from "./Calendar";
 import DeadlineList from "./DeadlineList";
 import { Helmet } from 'react-helmet';
+import "./Home.css";
 
 const Home = () => {
     return (
