@@ -15,14 +15,14 @@ const Signup = () => {
     return (
         <div>
             <Helmet>
-                <title>햄매니저 - 홈</title>
+                <title>햄매니저 - 회원가입</title>
                 <link rel="icon" href="/favicon.ico" />
             </Helmet>
 
-            <div className={styles.signupContainer}>
-                <div className={styles.signupBox}>
+            <div className="signup-container">
+                <div className="signup-box">
                     {/* 로고 */}
-                    <img src="/hamlogo.png" alt="Resumate Logo" className={styles.signupLogo} />
+                    <img src="/hamlogo.png" alt="Resumate Logo" className="signup-logo" />
 
                     {/* 입력 필드 */}
                     <input

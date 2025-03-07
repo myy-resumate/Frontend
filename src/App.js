@@ -4,6 +4,7 @@ import Signup from "./components/Sign-up/Signup";
 import Navbar from "./components/common/NavBar";
 import Footer from "./components/common/Footer";
 import Home from "./components/Home/Home";
+import LoginForm from "./components/Login/LoginForm";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
 
         <Route path="/" element={<Home />} />
         <Route path="/sign-up" element={<Signup />} />
+        <Route path="/login" element={<LoginForm />} />
       </Routes>
     </BrowserRouter>
   );
