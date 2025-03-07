@@ -1,0 +1,72 @@
+/* 회원가입 페이지 스타일 */
+.loginContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: white;
+}
+
+.loginBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    transform: scale(1.1);
+    /* 1.2배 확대 */
+    transform-origin: center;
+}
+
+.loginLogo {
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.loginInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 14px;
+}
+
+.loginInput:focus {
+    outline: none;
+    border-color: #facc15;
+    /* 노란색 */
+    box-shadow: 0 0 5px rgba(250, 204, 21, 0.5);
+}
+
+.loginButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #FFE38E;
+    /* 노란색 */
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.loginButton:hover {
+    background-color: #FDCB33;
+    /* 좀 더 진한 노란색 */
+}
+
+.signupButton {
+    margin-top: 10px;
+    font-size: 14px;
+    color: gray;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    /*밑줄 표시*/
+}
