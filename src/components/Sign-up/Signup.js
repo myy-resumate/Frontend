@@ -19,10 +19,10 @@ const Signup = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Helmet>
 
-            <div className="signup-container">
-                <div className="signup-box">
+            <div className={styles.signupContainer}>
+                <div className={styles.signupBox}>
                     {/* 로고 */}
-                    <img src="/hamlogo.png" alt="Resumate Logo" className="signup-logo" />
+                    <img src="/hamlogo.png" alt="Resumate Logo" className={styles.signupLogo} />
 
                     {/* 입력 필드 */}
                     <input
