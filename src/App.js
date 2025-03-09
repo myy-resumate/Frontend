@@ -9,6 +9,8 @@ import Calendar from "./components/Home/Calendar";
 import RecentResume from "./components/Home/RecentResume";
 import Repo from "./components/Repo/Repo";
 import ResumeRepo from "./components/Repo/ResumeRepo";
+import Resume from "./components/Resume/Resume";
+import ResumeCom from "./components/Resume/ResumeCom";
 
 function App() {
   return (
@@ -20,12 +22,13 @@ function App() {
         <Route path="/cal" element={<Calendar />} />
         <Route path="/recent" element={<RecentResume />} />
         <Route path="/repo" element={<Repo />} />
-
+        <Route path="/res" element={<Resume />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/repository" element={<ResumeRepo />} />
+        <Route path="/resume" element={<ResumeCom />} />
       </Routes>
     </BrowserRouter>
   );
