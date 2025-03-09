@@ -1,0 +1,110 @@
+/* 문서 카드 스타일 */
+.document-card,
+.plus-card {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: white;
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+/* 플러스 카드 */
+.plus-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* 마우스 올렸을 때 느리게 움직이는 효과 */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.plus-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* 마우스를 올리면 살짝 떠오르는 효과 */
+    transform: translateY(-2px);
+}
+
+.plus-icon {
+    font-size: 48px;
+    color: #d1d5db;
+}
+
+.document-card {
+    display: flex;
+    flex-direction: column;
+
+    /* 마우스 올렸을 때 느리게 움직이는 효과 */
+    transition: box-shadow 0.3s ease, transform 0.3s ease
+}
+
+.document-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* 마우스를 올리면 살짝 떠오르는 효과 */
+    transform: translateY(-2px);
+}
+
+/* 카드 헤더 */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 17px;
+}
+
+/* 상태 뱃지 */
+.status-badge {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 9999px;
+}
+
+.status-writing {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.status-complete {
+    background-color: #ffedd5;
+    color: #ea580c;
+}
+
+.status-temp {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.status-default {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+/* 카드 내용 */
+.card-date {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.card-content {
+    margin-top: 16px;
+    padding-top: 12px;
+    padding-left: 0px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.card-company {
+    font-size: 14px;
+    color: #4b5563;
+}
+
+.card-period {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+}

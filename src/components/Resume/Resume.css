@@ -1,0 +1,157 @@
+.application-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333;
+}
+
+.application-header {
+    margin-bottom: 50px;
+}
+
+.application-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.application-date {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.application-tags {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+.tag-red {
+    background-color: #b71c1c;
+    color: white;
+}
+
+.tag-beige {
+    background-color: #e0d7c9;
+    color: #666;
+}
+
+.application-actions {
+    margin-left: auto;
+    font-size: 14px;
+    color: #888;
+}
+
+.application-actions span {
+    cursor: pointer;
+}
+
+.divider {
+    margin: 0 8px;
+}
+
+.application-file {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+}
+
+.file-icon {
+    width: 20px;
+    height: 20px;
+    background-color: #b71c1c;
+    margin-right: 12px;
+}
+
+.file-name {
+    flex-grow: 1;
+    padding-left: 10px;
+}
+
+.download-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.org-title {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 1000;
+    margin-top: 50px;
+    margin-bottom: 15px;
+}
+
+.application-details {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.details-content {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 15px;
+}
+
+.detail-item {
+    margin-bottom: 8px;
+}
+
+.detail-link {
+    color: #1976d2;
+    text-decoration: none;
+}
+
+.application-statement {
+    margin-bottom: 20px;
+}
+
+.statement-content {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+}
+
+.statement-label {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    margin: 0;
+}
+
+.statement-text {
+    padding: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.statement-text p {
+    line-height: 1.6;
+    margin: 0;
+}
