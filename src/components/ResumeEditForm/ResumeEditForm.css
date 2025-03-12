@@ -7,7 +7,16 @@
     font-family: 'Apple SD Gothic Neo', sans-serif;
 }
 
+.back-btn {
+    margin-bottom: 30px;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: #333;
+}
+
 .title-input {
+    width: 100%;
     margin-bottom: 30px;
     padding: 0px;
     font-size: 28px;
@@ -37,11 +46,11 @@
 }
 
 .form-tag {
-    background-color: #649AD0;
-    color: white;
+    background-color: transparent;
+    color: #666;
     padding: 6px 12px;
     border-radius: 6px;
-    border: none;
+    border: 1px solid #ddd;
     font-size: 12px;
     cursor: pointer;
     display: flex;
@@ -53,7 +62,33 @@
 }
 
 .form-tag::placeholder {
+    color: #666;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tag-item {
+    display: flex;
+    align-items: center;
+    background-color: #ECD19E;
     color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.remove-tag {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 16px;
 }
 
 .btn-add {
@@ -80,7 +115,6 @@
 
 .btn-save:hover {
     background-color: #FFF7DF;
-    /* 마우스 올렸을 때 색상 */
 }
 
 .file-upload {
@@ -95,9 +129,7 @@
 .file-label {
     display: flex;
     flex-direction: row;
-    /* 가로축을 가운데로 */
     align-items: center;
-    /* 세로축을 가운데로 */
     justify-content: center;
     gap: 5px;
     color: #888;
@@ -158,8 +190,18 @@
     border-radius: 6px;
 }
 
+.question-answer-section {
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.question-answer-section:last-child {
+    border-bottom: none;
+}
+
 .form-group {
-    margin-bottom: 8px;
+    margin-bottom: 15px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -225,16 +267,30 @@
 .add-section-btn {
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding-left: 0px;
-    padding-right: 0px;
-
+    width: 100%;
     background-color: white;
     color: #666;
     height: 40px;
     font-size: 24px;
-
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+
+.remove-question-btn {
+    position: absolute;
+    right: 0;
+    top: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #666;
+}
+
+.remove-question-btn:hover {
+    background-color: #f1f1f1;
 }

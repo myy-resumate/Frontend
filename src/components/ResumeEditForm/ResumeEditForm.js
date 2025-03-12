@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileUp, Plus, ChevronLeft } from 'lucide-react';
-import './ResumeForm.css';
+import './ResumeEditForm.css';
 
-const ResumeForm = () => {
+const ResumeEditForm = ({ savedData }) => {
+    // 기존 저장된 데이터로 초기화
     const [title, setTitle] = useState('');
-    // 태그에 대한 함수 만들어야함
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState('');
     const [files, setFiles] = useState([]);
@@ -18,6 +18,26 @@ const ResumeForm = () => {
     });
     const [questions, setQuestions] = useState([{ question: '', answer: '' }]);
 
+    // 저장된 데이터로 초기화
+    useEffect(() => {
+        if (savedData) {
+            setTitle(savedData.title || '');
+            setTags(savedData.tags || []);
+            setFiles(savedData.files || []);
+            setFormData({
+                organization: savedData.organization || '',
+                url: savedData.url || '',
+                applyStart: savedData.applyStart || '',
+                applyEnd: savedData.applyEnd || '',
+                introduction: savedData.introduction || '',
+                details: savedData.details || ''
+            });
+
+            if (savedData.questions && savedData.questions.length > 0) {
+                setQuestions(savedData.questions);
+            }
+        }
+    }, [savedData]);
 
     const handleFileChange = (e) => {
         if (e.target.files.length > 0) {
@@ -36,7 +56,7 @@ const ResumeForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('지원서가 저장되었습니다.');
+        alert('지원서가 수정되었습니다.');
     };
 
     const removeFile = (index) => {
@@ -102,7 +122,7 @@ const ResumeForm = () => {
                 <button className="btn btn-add" onClick={addTag}>
                     <Plus />
                 </button>
-                <button className="btn btn-save" onClick={handleSubmit}>저장</button>
+                <button className="btn btn-save" onClick={handleSubmit}>수정 완료</button>
             </div>
 
             {tags.length > 0 && (
@@ -144,9 +164,10 @@ const ResumeForm = () => {
                 <h2 className="section-header">지원처 정보</h2>
                 <div className="form-content">
                     <div className="form-group">
-                        <label for="organization">지원처</label>
+                        <label htmlFor="organization">지원처</label>
                         <input
                             type="text"
+                            id="organization"
                             name="organization"
                             value={formData.organization}
                             onChange={handleFormChange}
@@ -155,9 +176,10 @@ const ResumeForm = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label for="url">URL</label>
+                        <label htmlFor="url">URL</label>
                         <input
                             type="text"
+                            id="url"
                             name="url"
                             value={formData.url}
                             onChange={handleFormChange}
@@ -166,23 +188,23 @@ const ResumeForm = () => {
                         />
                     </div>
                     <div className="form-group-date">
-                        <label for="applyStart">지원 시작일</label>
+                        <label htmlFor="applyStart">지원 시작일</label>
                         <input
                             type="date"
+                            id="applyStart"
                             name="applyStart"
                             value={formData.applyStart}
                             onChange={handleFormChange}
                             className="form-input-date"
-                            placeholder="지원 시작일을 입력하세요"
                         />
-                        <label for="applyEnd">지원 마감일</label>
+                        <label htmlFor="applyEnd">지원 마감일</label>
                         <input
                             type="date"
+                            id="applyEnd"
                             name="applyEnd"
                             value={formData.applyEnd}
                             onChange={handleFormChange}
                             className="form-input-date"
-                            placeholder="지원 마감일을 입력하세요"
                         />
                     </div>
                 </div>
@@ -228,4 +250,4 @@ const ResumeForm = () => {
     );
 };
 
-export default ResumeForm;
+export default ResumeEditForm;
