@@ -2,16 +2,29 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // 네비게이션 훅 추가
 import styles from "./LoginForm.module.css"; // 스타일 파일 추가
 import { Helmet } from 'react-helmet';  //탭에 텍스트를 표시하기 위한 라이브러리
+import apiClient from "../../apiClient";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate(); // 네비게이션 함수
 
+    const handleLoginForm = async () => {
+        // 로그인 API 호출 로직
+        try {
+            const response = await apiClient.post(
+                '/api/members/login',
+                { email, password, },
+                { withCredentials: true } // 쿠키 포함
+            );
+            const { accessToken } = response.data;
 
-    const handleLoginForm = () => {
-        alert(`이메일: ${email}, 비밀번호: ${password}`);
-        // 로그인 API 호출 로직 추가 가능
+            // 로컬 스토리지에 토큰 저장
+            localStorage.setItem('accessToken', accessToken);
+            navigate('/');
+        } catch (error) {
+            alert(`로그인 실패: ${error.response?.data?.message || '오류 발생'}`);
+        }
     };
 
     const goToSignup = () => {
