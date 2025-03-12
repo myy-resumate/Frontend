@@ -11,6 +11,9 @@ import Repo from "./components/Repo/Repo";
 import ResumeRepo from "./components/Repo/ResumeRepo";
 import Resume from "./components/Resume/Resume";
 import ResumeCom from "./components/Resume/ResumeCom";
+import ResumeForm from "./components/ResumeForm/ResumeForm";
+import ResumeFormCom from "./components/ResumeForm/ResumeFormCom";
+import ResumeEditFormCom from "./components/ResumeEditForm/ResumeEditFormCom";
 
 function App() {
   return (
@@ -23,12 +26,16 @@ function App() {
         <Route path="/recent" element={<RecentResume />} />
         <Route path="/repo" element={<Repo />} />
         <Route path="/res" element={<Resume />} />
+        <Route path="/resform" element={<ResumeForm />} />
+
 
         <Route path="/" element={<Home />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/repository" element={<ResumeRepo />} />
         <Route path="/resume" element={<ResumeCom />} />
+        <Route path="/resume-form" element={<ResumeFormCom />} />
+        <Route path="/edit" element={<ResumeEditFormCom />} />
       </Routes>
     </BrowserRouter>
   );

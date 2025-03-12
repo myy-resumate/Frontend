@@ -1,0 +1,296 @@
+.application-container {
+    max-width: 960px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    font-family: 'Apple SD Gothic Neo', sans-serif;
+}
+
+.back-btn {
+    margin-bottom: 30px;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    color: #333;
+}
+
+.title-input {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    border: none;
+    /* 포커싱 제거 */
+    outline: none;
+}
+
+.button-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 8px;
+}
+
+.btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-tag {
+    background-color: transparent;
+    color: #666;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    width: 80px;
+    margin-right: 0px;
+}
+
+.form-tag::placeholder {
+    color: #666;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tag-item {
+    display: flex;
+    align-items: center;
+    background-color: #ECD19E;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.remove-tag {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+.btn-add {
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    color: #666;
+}
+
+.btn-add:hover {
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+.btn-save {
+    margin-left: auto;
+    color: #333;
+    padding: 6px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+.btn-save:hover {
+    background-color: #FFF7DF;
+}
+
+.file-upload {
+    border: 1px dashed #ddd;
+    padding: 10px;
+    text-align: center;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.file-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: #888;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.file-input {
+    display: none;
+}
+
+.attached-files {
+    margin-bottom: 40px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.file-name {
+    flex-grow: 1;
+    font-size: 14px;
+}
+
+.remove-file {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-section {
+    margin-top: 50px;
+}
+
+.section-header {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.section-desc {
+    font-size: 14px;
+    color: black;
+    margin-bottom: 15px;
+}
+
+.form-content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 6px;
+}
+
+.question-answer-section {
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.question-answer-section:last-child {
+    border-bottom: none;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    font-size: 14px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group-date {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.form-input-date {
+    width: 37%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.form-input {
+    width: 91%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.form-question {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    min-height: 80px;
+    resize: vertical;
+}
+
+.form-answer {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    min-height: 180px;
+    resize: vertical;
+}
+
+.form-actions {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-section-btn {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
+    background-color: white;
+    color: #666;
+    height: 40px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.remove-question-btn {
+    position: absolute;
+    right: 0;
+    top: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #666;
+}
+
+.remove-question-btn:hover {
+    background-color: #f1f1f1;
+}
