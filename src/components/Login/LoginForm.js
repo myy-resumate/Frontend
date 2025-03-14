@@ -17,7 +17,7 @@ const LoginForm = () => {
                 { email, password, },
                 { withCredentials: true } // 쿠키 포함
             );
-            const { accessToken } = response.data;
+            const accessToken = response.data.result.accessToken;
 
             // 로컬 스토리지에 토큰 저장
             localStorage.setItem('accessToken', accessToken);

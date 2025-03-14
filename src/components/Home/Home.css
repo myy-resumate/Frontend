@@ -1,3 +1,36 @@
-.calender-deadlinelist {
-    margin-top: 120px;
+.home-main {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.calendar-deadlinelist {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: center;
+    width: 68%;
+    /* 부모 요소의 너비 지정 */
+    margin: 0 auto;
+    /* 좌우 여백 자동 정렬 */
+}
+
+.calendar {
+    flex: 2;
+}
+
+.deadlineList {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .calendar-deadlinelist {
+        flex-direction: column;
+    }
+
+    .calendar,
+    .deadlineList {
+        width: 100%;
+    }
 }

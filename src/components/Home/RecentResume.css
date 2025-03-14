@@ -1,5 +1,5 @@
 .recent-applications {
-    background-color: #fdf6e3;
+    background-color: transparent;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -23,7 +23,7 @@
 
 .applications-list {
     display: flex;
-    gap: 100px;
+    gap: 20px;
     justify-content: center;
 }
 

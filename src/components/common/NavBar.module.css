@@ -13,17 +13,23 @@ span {
     justify-content: space-between;
     /* 좌우로 공간을 균등하게 배분 */
     align-items: center;
-    background-color: #FFF7DF;
     padding: 4px 15%;
 
-    height: 50px;
+    height: 70px;
     /* 네비게이션 바의 고정 높이 설정 */
+    border-bottom: 1px solid #ddd;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    flex-grow: 1;
+    flex-grow: 0.5;
+
+}
+
+.logo button {
+    border: none;
+    background-color: transparent;
 }
 
 .logo img {
@@ -42,17 +48,18 @@ span {
 .menu a {
     text-decoration: none;
     color: #3B3B3B;
-    font-weight: normal;
+    font-weight: 600;
+    font-size: 17px;
 }
 
 .menu a:hover {
-    font-weight: bold;
-
+    font-weight: 800;
+    color: #ECD19E;
     /* 마우스 올리면 글씨가 굵어짐 */
 }
 
 .authButton {
-    background-color: #FFF7DF;
+    background-color: transparent;
     /* 기본 색상 */
     color: black;
     border: 1.5px solid #ccc;
