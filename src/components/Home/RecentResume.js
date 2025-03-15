@@ -3,14 +3,6 @@ import "./RecentResume.css";
 import DocumentCard from "../Repo/DocumentCard";
 import apiClient from "../../apiClient";
 
-const doc = [
-    { id: 1, title: "제목", date: "2025.01.01", company: "지원 회사명", period: "25.02.01 - 25.02.20" },
-    { id: 2, title: "제목", date: "2025.01.01", company: "지원 회사명", period: "25.02.01 - 25.02.20" },
-    { id: 3, title: "제목", date: "2025.01.01", company: "지원 회사명", period: "25.02.01 - 25.02.20" },
-    { id: 4, title: "제목", date: "2025.01.01", company: "지원 회사명", period: "25.02.01 - 25.02.20" },
-    { id: 5, title: "제목", date: "2025.01.01", company: "지원 회사명", period: "25.02.01 - 25.02.20" },
-];
-
 const RecentResume = () => {
     const [documents, setDocuments] = useState([]);
 
@@ -18,8 +10,6 @@ const RecentResume = () => {
     useEffect(() => {
         const fetchRecentResumes = async () => {
             try {
-                const token = localStorage.getItem("accessToken"); // 저장된 JWT 가져오기
-
                 const response = await apiClient.get("/api/home/resumes/recent", {
                     withCredentials: true, // 쿠키 포함
                 });
@@ -50,7 +40,9 @@ const RecentResume = () => {
                             </div>
                         ))
                     ) : (
-                        <p className="no-data">최근 조회한 지원서가 없습니다.</p>
+                        <div className='no-data-box'>
+                            <p className="no-data">최근 조회한 지원서가 없습니다.</p>
+                        </div>
                     )}
                 </div>
             </div>
