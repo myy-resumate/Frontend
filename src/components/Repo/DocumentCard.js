@@ -1,7 +1,7 @@
 import React from 'react';
 import './DocumentCard.css';
 
-const DocumentCard = ({ title, date, hasStatus, status, isPlus, company, period }) => {
+const DocumentCard = ({ title, date, hasStatus, status, isPlus, company, period, applyStart, applyEnd }) => {
     if (isPlus) {
         return (
             <div className="plus-card">
@@ -27,7 +27,7 @@ const DocumentCard = ({ title, date, hasStatus, status, isPlus, company, period 
             <span className="card-date">{date}</span>
             <div className="card-content">
                 <div className="card-company">| {company || '지원 회사명'}</div>
-                <div className="card-period">모집 기간: {period || '25.02.01 - 25.02.20'}</div>
+                <div className="card-period">모집 기간: {applyStart || '25.02.01'} - {applyEnd || '25.02.20'}</div>
             </div>
         </div>
     );
