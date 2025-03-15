@@ -10,7 +10,7 @@ const DeadlineList = () => {
         const fetchJobListings = async () => {
             try {
                 const response = await apiClient.get('/api/home/resumes/deadline', {
-                    withCredentials: true,
+                    withCredentials: true
                 });
 
                 setJobListings(response.data.result.deadlineDTOS); // API 응답 데이터 저장

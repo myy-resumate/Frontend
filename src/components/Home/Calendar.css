@@ -87,10 +87,58 @@
 }
 
 .day-number.selected {
-    background-color: #FFF2A8;
+    background-color: #f5f5f5;
     font-weight: 500;
 }
 
 .day-number.sunday {
     color: #e53935;
+}
+
+/* 이벤트가 있는 날짜 */
+.day-number.has-event {
+    background-color: #ECD19E;
+    border: 2px solid #ECD19E;
+    color: white;
+}
+
+/* 선택된 날짜이면서 이벤트가 있는 경우 */
+.day-number.selected.has-event {
+    background-color: #ECD19E;
+    border: 3.5px solid #E4BE76;
+}
+
+
+/* [추가] 툴팁 스타일 */
+.custom-tooltip {
+    /* 부모가 움직이면 같이 움직임 */
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.93);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 250px;
+    min-width: 180px;
+}
+
+/* [추가] 툴팁 헤더 스타일 */
+.tooltip-header {
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 3px;
+}
+
+/* [추가] 툴팁 내용 스타일 */
+.tooltip-content {
+    list-style-type: none;
+    padding-left: 5px;
+    margin: 0;
+}
+
+/* [추가] 툴팁 항목 스타일 */
+.tooltip-content li {
+    padding: 2px 0;
+    font-size: 13px;
 }

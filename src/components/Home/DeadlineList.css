@@ -16,8 +16,9 @@
 /* 부제목 스타일 */
 .listings-subtitle {
     margin-bottom: 15px;
-    color: #333;
-    font-size: 15px;
+    color: #666;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 /* 목록 스타일 */
@@ -31,8 +32,8 @@
     text-decoration: none;
     /* 밑줄 없애기 */
     color: inherit;
-    padding-left: 5px;
-    padding-right: 5px
+    padding-left: 10px;
+    padding-right: 10px
 }
 
 .listing-link:hover {
