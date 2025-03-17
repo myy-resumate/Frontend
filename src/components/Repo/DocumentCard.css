@@ -6,7 +6,7 @@
     border: 1px solid #d1d5db;
     border-radius: 6px;
     background-color: white;
-    padding: 14px;
+    padding: 10px 14px;
     box-sizing: border-box;
 }
 
@@ -56,13 +56,16 @@
     /* margin-bottom: 8px; */
     font-weight: 700;
     font-size: 18px;
-    max-width: 100px;
+    max-width: 170px;
     white-space: nowrap;
     /* 한 줄로 표시 */
     overflow: hidden;
     /* 넘치는 부분 숨김 */
     text-overflow: ellipsis;
     /* ...으로 표시 */
+
+    margin-top: 7px;
+    margin-bottom: 5px;
 }
 
 /* 상태 뱃지 */
@@ -86,8 +89,8 @@
 }
 
 .card-content {
-    margin-top: 12px;
-    padding-top: 12px;
+    margin-top: 8px;
+    padding-top: 8px;
     padding-left: 0px;
     border-top: 1px solid #e5e7eb;
 }

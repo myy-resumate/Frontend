@@ -31,9 +31,10 @@ const RecentResume = () => {
                         documents.map((doc) => (
                             <div className="grid-item" key={doc.id}>
                                 <DocumentCard
+                                    tagName={doc.tags}
                                     title={doc.title}
-                                    date={doc.createDate}
-                                    company={doc.organization}
+                                    createDate={doc.createDate}
+                                    organization={doc.organization}
                                     applyStart={doc.applyStart}
                                     applyEnd={doc.applyEnd}
                                 />

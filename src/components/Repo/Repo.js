@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
-import axios from 'axios';
 import './Repo.css';
 import DocumentCard from './DocumentCard';
+import apiClient from '../../apiClient';
 
 const Repo = () => {
     const [documents, setDocuments] = useState([]);
@@ -10,29 +10,30 @@ const Repo = () => {
     const [error, setError] = useState(null);
     const [sortOrder, setSortOrder] = useState('latest');
     const [searchQuery, setSearchQuery] = useState('');
+    const [pageNum, setPageNum] = useState(1);
+    const [hasMore, setHasMore] = useState(true);  //더보기 버튼 표시 여부
 
     // 백엔드에서 데이터를 가져오는 함수
     const fetchDocuments = async () => {
         setIsLoading(true);
         try {
             // 실제 API 엔드포인트로 변경해야 합니다
-            const response = await axios.get('/api/documents');
-            setDocuments(response.data);
+            const response = await apiClient.get('/api/resumes',
+                {
+                    params: {
+                        page: 0,
+                        size: 14,
+                        sort: "createdAt,desc"
+                    },
+                    withCredentials: true
+                });
+
+            setHasMore(!response.data.result.last);
+            setDocuments(response.data.result.content);
             setError(null);
         } catch (err) {
             setError(err.message || '문서를 불러오는데 실패했습니다');
             console.error('문서 로딩 에러:', err);
-
-            // 에러 발생 시 테스트 데이터로 대체 (개발용)
-            setDocuments([
-                { id: 1, title: '제목1', createDate: '2025.01.01', organization: '네이버', period: '25.02.01 - 25.02.20' },
-                { id: 2, title: '제목2', createDate: '2025.01.01', hasTag: true, tagName: ['합격', '회사'], organization: '카카오', period: '25.02.01 - 25.02.20' },
-                { id: 3, title: '제목3', createDate: '2025.01.01', hasTag: true, tagName: ['회사'], organization: '라인', period: '25.02.01 - 25.02.20' },
-                { id: 4, title: '제목4', createDate: '2025.01.01', organization: '쿠팡', period: '25.02.01 - 25.02.20' },
-                { id: 5, title: '제목5', createDate: '2025.01.01', organization: '배달의민족', period: '25.02.01 - 25.02.20' },
-                { id: 6, title: '제목6', createDate: '2025.01.01', hasTag: true, tagName: ['인턴', '합격', '마감'], organization: '토스', period: '25.02.01 - 25.02.20' },
-                { id: 7, title: '제목7', createDate: '2025.01.01', hasTag: true, tagName: ['동아리'], organization: '소프트', period: '25.02.01 - 25.02.20' }
-            ]);
         } finally {
             setIsLoading(false);
         }
@@ -69,21 +70,29 @@ const Repo = () => {
 
     // 더보기 버튼 처리
     const handleLoadMore = async () => {
+        console.log("더보기 버튼 클릭, 현재 페이지:", pageNum);
         setIsLoading(true);
         try {
-            // 여기서는 페이지 기반 로딩 예시를 보여줍니다
-            // 실제 구현에서는 마지막 문서 ID 또는 페이지 번호를 사용할 수 있습니다
-            const lastDocId = documents.length > 0 ? documents[documents.length - 1].id : 0;
+            const response = await apiClient.get('/api/resumes',
+                {
+                    params: {
+                        page: pageNum,
+                        size: 14,
+                        sort: "createdAt,desc"
+                    },
+                    withCredentials: true
+                });
 
-            const response = await axios.get('/api/documents', {
-                params: {
-                    after: lastDocId,
-                    limit: 8
-                }
-            });
+            console.log("API 응답:", response.data);
+            console.log("가져온 데이터 개수:", response.data.result.content.length);
 
+            setHasMore(!response.data.result.last);
             // 기존 문서에 새 문서 추가
-            setDocuments([...documents, ...response.data]);
+            setDocuments([...documents, ...response.data.result.content]);
+            // 페이지 번호 증가
+            setPageNum(prevPageNum => prevPageNum + 1);
+
+
         } catch (err) {
             console.error('추가 문서 로딩 실패:', err);
             setError('추가 문서를 불러오는데 실패했습니다');
@@ -142,17 +151,17 @@ const Repo = () => {
                             <DocumentCard
                                 title={doc.title}
                                 createDate={doc.createDate}
-                                hasTag={doc.hasTag}
-                                tagName={doc.tagName}
+                                tagName={doc.tags}
                                 organization={doc.organization}
-                                period={doc.period}
+                                applyStart={doc.applyStart}
+                                applyEnd={doc.applyEnd}
                             />
                         </div>
                     ))}
                 </div>
             )}
 
-            {!isLoading && documents.length > 0 && (
+            {!isLoading && hasMore && documents.length > 0 && (
                 <div className="load-more">
                     <button
                         className="load-more-button"

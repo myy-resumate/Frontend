@@ -17,9 +17,9 @@
 }
 
 .applications-list {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 25px;
 }
 
 .no-data-box {
