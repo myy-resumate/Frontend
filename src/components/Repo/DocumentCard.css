@@ -45,17 +45,17 @@
     transform: translateY(-2px);
 }
 
-/* 카드 헤더 */
-.card-header {
+.card-tags {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: flex-end;
 }
 
 .card-title {
+    /* margin-bottom: 8px; */
     font-weight: 700;
-    font-size: 17px;
+    font-size: 18px;
     max-width: 100px;
     white-space: nowrap;
     /* 한 줄로 표시 */
@@ -66,30 +66,17 @@
 }
 
 /* 상태 뱃지 */
-.status-badge {
+.status-badge,
+.no-status-badge {
     font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 9999px;
+    padding: 2px 5px;
+    border-radius: 6px;
+    background-color: #ECD19E;
+    color: white;
 }
 
-.status-writing {
-    background-color: #dbeafe;
-    color: #2563eb;
-}
-
-.status-complete {
-    background-color: #ffedd5;
-    color: #ea580c;
-}
-
-.status-temp {
-    background-color: #d1fae5;
-    color: #059669;
-}
-
-.status-default {
-    background-color: #f3f4f6;
-    color: #4b5563;
+.no-status-badge {
+    visibility: hidden;
 }
 
 /* 카드 내용 */
@@ -99,19 +86,18 @@
 }
 
 .card-content {
-    margin-top: 16px;
+    margin-top: 12px;
     padding-top: 12px;
     padding-left: 0px;
     border-top: 1px solid #e5e7eb;
 }
 
 .card-company {
-    font-size: 14px;
-    color: #4b5563;
+    font-size: 15px;
+    color: #333;
 }
 
 .card-period {
     font-size: 13px;
-    color: #6b7280;
-    margin-top: 4px;
+    color: #333;
 }

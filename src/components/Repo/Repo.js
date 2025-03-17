@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search } from 'lucide-react';
+import { Search, ChevronDown } from 'lucide-react';
 import axios from 'axios';
 import './Repo.css';
 import DocumentCard from './DocumentCard';
@@ -25,13 +25,13 @@ const Repo = () => {
 
             // 에러 발생 시 테스트 데이터로 대체 (개발용)
             setDocuments([
-                { id: 1, title: '제목1', date: '2025.01.01', company: '네이버', period: '25.02.01 - 25.02.20' },
-                { id: 2, title: '제목2', date: '2025.01.01', hasStatus: true, status: '완료', company: '카카오', period: '25.02.01 - 25.02.20' },
-                { id: 3, title: '제목3', date: '2025.01.01', hasStatus: true, status: '작성', company: '라인', period: '25.02.01 - 25.02.20' },
-                { id: 4, title: '제목4', date: '2025.01.01', company: '쿠팡', period: '25.02.01 - 25.02.20' },
-                { id: 5, title: '제목5', date: '2025.01.01', company: '배달의민족', period: '25.02.01 - 25.02.20' },
-                { id: 6, title: '제목6', date: '2025.01.01', hasStatus: true, status: '임시', company: '토스', period: '25.02.01 - 25.02.20' },
-                { id: 7, title: '제목7', date: '2025.01.01', hasStatus: true, status: '작성', company: '당근마켓', period: '25.02.01 - 25.02.20' }
+                { id: 1, title: '제목1', createDate: '2025.01.01', organization: '네이버', period: '25.02.01 - 25.02.20' },
+                { id: 2, title: '제목2', createDate: '2025.01.01', hasTag: true, tagName: ['합격', '회사'], organization: '카카오', period: '25.02.01 - 25.02.20' },
+                { id: 3, title: '제목3', createDate: '2025.01.01', hasTag: true, tagName: ['회사'], organization: '라인', period: '25.02.01 - 25.02.20' },
+                { id: 4, title: '제목4', createDate: '2025.01.01', organization: '쿠팡', period: '25.02.01 - 25.02.20' },
+                { id: 5, title: '제목5', createDate: '2025.01.01', organization: '배달의민족', period: '25.02.01 - 25.02.20' },
+                { id: 6, title: '제목6', createDate: '2025.01.01', hasTag: true, tagName: ['인턴', '합격', '마감'], organization: '토스', period: '25.02.01 - 25.02.20' },
+                { id: 7, title: '제목7', createDate: '2025.01.01', hasTag: true, tagName: ['동아리'], organization: '소프트', period: '25.02.01 - 25.02.20' }
             ]);
         } finally {
             setIsLoading(false);
@@ -118,7 +118,7 @@ const Repo = () => {
                         value={searchQuery}
                         onChange={handleSearchChange}
                     />
-                    <Search className="search-icon" size={16} />
+                    <Search className="search-icon" size={18} />
                 </div>
             </div>
 
@@ -141,10 +141,10 @@ const Repo = () => {
                         <div className="grid-item" key={doc.id}>
                             <DocumentCard
                                 title={doc.title}
-                                date={doc.date}
-                                hasStatus={doc.hasStatus}
-                                status={doc.status}
-                                company={doc.company}
+                                createDate={doc.createDate}
+                                hasTag={doc.hasTag}
+                                tagName={doc.tagName}
+                                organization={doc.organization}
                                 period={doc.period}
                             />
                         </div>
@@ -160,7 +160,7 @@ const Repo = () => {
                         disabled={isLoading}
                     >
                         {isLoading ? '로딩 중...' : '더보기'}
-                        {!isLoading && <span className="arrow-down">↓</span>}
+                        {!isLoading && <span className="arrow-down"><ChevronDown /></span>}
                     </button>
                 </div>
             )}
