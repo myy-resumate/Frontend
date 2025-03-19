@@ -4,7 +4,7 @@ import Navbar from "../common/NavBar";
 import Footer from "../common/Footer";
 import { Helmet } from 'react-helmet';
 
-const ResumeCom = () => {
+const ResumeCom = (resumeId) => {
     return (
         <div>
             <Helmet>
@@ -13,7 +13,7 @@ const ResumeCom = () => {
             </Helmet>
 
             <Navbar />
-            <Resume />
+            <Resume resumeId={resumeId} />
             <Footer />
         </div>
     );

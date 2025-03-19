@@ -35,7 +35,7 @@ function App() {
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/repo" element={<ResumeRepo />} />
-        <Route path="/resume" element={<ResumeCom />} />
+        <Route path="/resume/:resumeId" element={<ResumeCom />} />
         <Route path="/resume-form" element={<ResumeFormCom />} />
         <Route path="/edit" element={<ResumeEditFormCom />} />
       </Routes>

@@ -1,16 +1,71 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Resume.css';
 import { Paperclip, Download } from 'lucide-react';
+import apiClient from '../../apiClient';
+import { useParams } from "react-router-dom";
 
 const Resume = () => {
+    const { resumeId } = useParams(); // URL에서 resumeId 가져오기
+    const [resume, setResume] = useState(null);  //객체는 초기화 어케하지 
+    const [error, setError] = useState(null);
+
+    const fetchResume = async (resumeId) => {
+        try {
+            const response = await apiClient.get(`/api/resumes/${resumeId}`,
+                {
+                    withCredentials: true
+                });
+
+            setResume(response.data.result);
+            setError(null);
+        } catch (err) {
+            setError(err.message || '지원원를 불러오는데 실패했습니다');
+            console.error('지원서 로딩 에러:', err);
+        }
+    };
+
+    //작성 날짜 형식 변환
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // getMonth()는 0부터 시작하므로 +1 필요
+        const day = date.getDate();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+
+        return `${year}년 ${month}월 ${day}일 ${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+    };
+
+    //모집기간 형식 변환 
+    const formatShortDate = (dateString) => {
+        const date = new Date(dateString);
+
+        const year = date.getFullYear().toString().slice(2); // 연도의 마지막 두 자리
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월을 2자리로 변환
+        const day = String(date.getDate()).padStart(2, '0'); // 일을 2자리로 변환
+
+        return `${year}.${month}.${day}`;
+    };
+
+    //처음 렌더링 
+    useEffect(() => {
+        fetchResume(resumeId);
+    }, [resumeId]);
+
     return (
         <div className="application-container">
             <div className="application-header">
-                <h1 className="application-title">현대 소프티어 부트캠프 지원</h1>
-                <p className="application-date">작성 날짜: 2024년 12월 1일 15:34</p>
+                <h1 className="application-title">{resume?.title}</h1>
+                <p className="application-date">작성 날짜: {formatDate(resume?.createdAt)}</p>
                 <div className="application-tags">
-                    <span className="tag tag-red">서류 탈락</span>
-                    <span className="tag tag-beige">완료</span>
+                    <div className="card-tags">
+                        {resume?.tags.map((tag) => (
+                            <div key={tag.taggingId} className="status-badge">  {/*인덱스 대신 고유id를 사용해야 불필요한 재렌더링을 줄일 수 있다.*/}
+                                {tag.tagName}
+                            </div>
+                        ))}
+                    </div>
                     <div className="application-actions">
                         <span>수정</span>
                         <span className="divider">|</span>
@@ -19,35 +74,50 @@ const Resume = () => {
                 </div>
             </div>
 
-            <div className="application-file">
-                <div className="file-item">
-                    <Paperclip />
-                    <span className="file-name">현대_소프티어_이력서.pdf</span>
-                    <button className="download-btn">
-                        <Download />
-                    </button>
+            {/* 첨부파일이 존재할 때만 렌더링 */}
+            {Array.isArray(resume?.attachments) && resume?.attachments.length > 0 && (
+                <div className="application-file">
+                    {resume?.attachments.map((file) => (
+                        <div className="file-item">
+                            <Paperclip />
+                            <span className="file-name">
+                                <div key={file.attachmentId} >
+                                    {file.fileName}
+                                </div>
+                            </span>
+                            <button className="download-btn">
+                                <Download />
+                            </button>
+                        </div>
+                    ))}
                 </div>
-            </div>
+            )}
 
             <div className="application-details">
                 <h2 className="org-title">지원처 정보</h2>
                 <div className="details-content">
-                    <p className="detail-item">현대 소프티어 부트캠프</p>
+                    <p className="detail-item">{resume?.org}</p>
                     <p className="detail-item">
-                        URL: <a href="https://softeerbootcamp.hyundaimotorgroup.com" className="detail-link">https://softeerbootcamp.hyundaimotorgroup.com</a>
+                        URL: <a href={resume?.orgUrl} className="detail-link">{resume?.orgUrl}</a>
                     </p>
-                    <p className="detail-item">모집 기간: 24.12.01 - 24.12.30</p>
+                    <p className="detail-item">모집 기간: {formatShortDate(resume?.applyStart)} - {formatShortDate(resume?.applyEnd)}</p>
                 </div>
             </div>
 
             <div className="application-statement">
                 <h2 className="section-title">자기소개서</h2>
-                <div className="statement-content">
-                    <p className="statement-label">성장 과정</p>
-                    <div className="statement-text">
-                        <p>"끊임없는 도전과 배움을 갈조하는 환경에서 자라났습니다. 무모님께서는 항상 새로운 시도를 격려하며 실패를 두려워하지 않는 태도를 길러주셨습니다. 이러한 배경 덕분에 저는 초등학교 시절부터 다양한 활동에 참여하며 적극적으로 세상을 탐구하는 자세를 갖출 수 있었습니다. 특히, 중학교 때 참여한 스프트웨어 경진대회는 제에게 큰 동기부여가 되었으며, 이후 컴퓨터 공학이라는 분야에 관심을 갖게 된 계기가 되었습니다."</p>
-                    </div>
-                </div>
+                {Array.isArray(resume?.coverLetters) && resume?.coverLetters.length > 0 ? (
+                    resume?.coverLetters.map((coverLetter) => (
+                        <div className="statement-content" key={coverLetter.coverLetterId}>
+                            <p className="statement-label">{coverLetter.question}</p>
+                            <div className="statement-text">
+                                <p>{coverLetter.answer}</p>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className='no-coverLetter'>자기소개서의 질문과 답변을 작성해보세요</div>
+                )}
             </div>
         </div>
     );
