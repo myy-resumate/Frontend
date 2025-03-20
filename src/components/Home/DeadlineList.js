@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './DeadlineList.css';
-import apiClient from "../../apiClient";
+import apiClient from '../../common/apiClient';
 
 const DeadlineList = () => {
     // 공고 데이터

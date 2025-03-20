@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // 네비게이션 훅 추가
 import styles from "./LoginForm.module.css"; // 스타일 파일 추가
 import { Helmet } from 'react-helmet';  //탭에 텍스트를 표시하기 위한 라이브러리
-import apiClient from "../../apiClient";
+import apiClient from '../../common/apiClient';
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");

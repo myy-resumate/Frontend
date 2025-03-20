@@ -15,10 +15,12 @@ import ResumeCom from "./components/Resume/ResumeCom";
 import ResumeForm from "./components/ResumeForm/ResumeForm";
 import ResumeFormCom from "./components/ResumeForm/ResumeFormCom";
 import ResumeEditFormCom from "./components/ResumeEditForm/ResumeEditFormCom";
+import ScrollToTop from "./common/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* 나중에 없앨 애들 */}
         <Route path="/navi" element={<Navbar />} />

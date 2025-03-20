@@ -32,3 +32,13 @@
     justify-content: center;
     align-items: center;
 }
+
+.invisible-button {
+    all: unset;
+    /* 기본 스타일 제거 */
+    width: 100%;
+    /* 부모 크기에 맞춤 */
+    height: 100%;
+    cursor: pointer;
+    /* 클릭 가능하게 유지 */
+}

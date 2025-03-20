@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
 import './Repo.css';
 import DocumentCard from './DocumentCard';
-import apiClient from '../../apiClient';
+import apiClient from '../../common/apiClient';
+import { useNavigate } from "react-router-dom";
+
 
 const Repo = () => {
     const [documents, setDocuments] = useState([]);
@@ -12,6 +14,12 @@ const Repo = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [pageNum, setPageNum] = useState(0);
     const [hasMore, setHasMore] = useState(true);  //더보기 버튼 표시 여부
+
+    const navigate = useNavigate();
+    //지원서 조회 화면으로 이동하는 함수 
+    const goToResume = async (resumeId) => {
+        navigate(`/resume/${resumeId}`);
+    }
 
     //검색어에서 태그 추출
     const extractTags = (query) => {
@@ -246,32 +254,37 @@ const Repo = () => {
 
                     {filteredAndSortedDocuments.map(doc => (
                         <div className="grid-item" key={doc.id}>
-                            <DocumentCard
-                                title={doc.title}
-                                createDate={doc.createDate}
-                                tagName={doc.tags}
-                                organization={doc.organization}
-                                applyStart={doc.applyStart}
-                                applyEnd={doc.applyEnd}
-                            />
+                            <button className="invisible-button" onClick={() => goToResume(doc.resumeId)}>
+                                <DocumentCard
+                                    title={doc.title}
+                                    createDate={doc.createDate}
+                                    tagName={doc.tags}
+                                    organization={doc.organization}
+                                    applyStart={doc.applyStart}
+                                    applyEnd={doc.applyEnd}
+                                />
+                            </button>
                         </div>
                     ))}
                 </div>
-            )}
+            )
+            }
 
-            {!isLoading && hasMore && documents.length > 0 && (
-                <div className="load-more">
-                    <button
-                        className="load-more-button"
-                        onClick={handleLoadMore}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? '로딩 중...' : '더보기'}
-                        {!isLoading && <span className="arrow-down"><ChevronDown /></span>}
-                    </button>
-                </div>
-            )}
-        </div>
+            {
+                !isLoading && hasMore && documents.length > 0 && (
+                    <div className="load-more">
+                        <button
+                            className="load-more-button"
+                            onClick={handleLoadMore}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? '로딩 중...' : '더보기'}
+                            {!isLoading && <span className="arrow-down"><ChevronDown /></span>}
+                        </button>
+                    </div>
+                )
+            }
+        </div >
     );
 };
 

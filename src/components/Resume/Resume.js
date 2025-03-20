@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Resume.css';
 import { Paperclip, Download } from 'lucide-react';
-import apiClient from '../../apiClient';
+import apiClient from '../../common/apiClient';
 import { useParams } from "react-router-dom";
 
 const Resume = () => {
@@ -50,6 +50,7 @@ const Resume = () => {
 
     //처음 렌더링 
     useEffect(() => {
+        window.scrollTo(0, 0);  //스크롤 위치 초기화
         fetchResume(resumeId);
     }, [resumeId]);
 
