@@ -59,6 +59,24 @@ const Resume = () => {
         navigate(`/edit/${resumeId}`);
     }
 
+    const deleteResume = async () => {
+        try {
+            await apiClient.delete(
+                `api/resumes/${resumeId}`,
+                {
+                    withCredentials: true
+                }
+            )
+
+            alert("지원서를 삭제하였습니다.");
+            navigate('/repo');
+
+        } catch (err) {
+            setError(err.message || '지원서를 불러오는데 실패했습니다');
+            console.error('지원서 로딩 에러:', err);
+        }
+    }
+
     return (
         <div className="application-container">
             <div className="application-header">
@@ -73,9 +91,9 @@ const Resume = () => {
                         ))}
                     </div>
                     <div className="application-actions">
-                        <span onClick={goToEdit}>수정</span>
+                        <span onClick={goToEdit} >수정</span>
                         <span className="divider">|</span>
-                        <span>삭제</span>
+                        <span onClick={deleteResume} >삭제</span>
                     </div>
                 </div>
             </div>
