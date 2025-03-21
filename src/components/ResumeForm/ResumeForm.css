@@ -36,7 +36,7 @@
     justify-content: center;
 }
 
-.form-tag {
+/* .form-tag {
     background-color: #649AD0;
     color: white;
     padding: 6px 12px;
@@ -54,7 +54,7 @@
 
 .form-tag::placeholder {
     color: white;
-}
+} */
 
 .btn-add {
     width: 30px;
@@ -70,7 +70,7 @@
     border: 1px solid #ddd;
 }
 
-.btn-save {
+/* .btn-save {
     margin-left: auto;
     color: #333;
     padding: 6px 15px;
@@ -79,9 +79,9 @@
 }
 
 .btn-save:hover {
-    background-color: #FFF7DF;
+    background-color: #ECD19E;
     /* 마우스 올렸을 때 색상 */
-}
+/* } */
 
 .file-upload {
     border: 1px dashed #ddd;

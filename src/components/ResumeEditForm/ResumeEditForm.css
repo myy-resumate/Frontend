@@ -58,6 +58,7 @@
     justify-content: center;
     outline: none;
     width: 80px;
+    height: 32px;
     margin-right: 0px;
 }
 
@@ -75,11 +76,13 @@
 .tag-item {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #ECD19E;
     color: white;
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 12px;
+    height: 32px;
 }
 
 .remove-tag {
@@ -88,12 +91,14 @@
     color: white;
     cursor: pointer;
     margin-left: 5px;
+    padding-bottom: 3px;
+    padding-right: 0px;
     font-size: 16px;
 }
 
 .btn-add {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     padding: 0px;
     background-color: transparent;
     border: 1px solid #ddd;
@@ -111,10 +116,11 @@
     padding: 6px 15px;
     font-size: 14px;
     border: 1px solid #ddd;
+    height: 32px;
 }
 
 .btn-save:hover {
-    background-color: #FFF7DF;
+    background-color: #ECD19E;
 }
 
 .file-upload {

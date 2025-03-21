@@ -21,6 +21,11 @@ const Repo = () => {
         navigate(`/resume/${resumeId}`);
     }
 
+    //지원서 저장 화면으로 이동하는 함수수
+    const goToResumeForm = async () => {
+        navigate("/resume-form");
+    }
+
     //검색어에서 태그 추출
     const extractTags = (query) => {
         const parts = query.split('#');
@@ -249,7 +254,9 @@ const Repo = () => {
             ) : (
                 <div className="document-grid">
                     <div className="grid-item">
-                        <DocumentCard isPlus={true} />
+                        <button className="invisible-button" onClick={goToResumeForm}>
+                            <DocumentCard isPlus={true} />
+                        </button>
                     </div>
 
                     {filteredAndSortedDocuments.map(doc => (
