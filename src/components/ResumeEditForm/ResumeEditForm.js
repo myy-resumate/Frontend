@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { FileUp, Plus, ChevronLeft } from 'lucide-react';
 import './ResumeEditForm.css';
+import apiClient from '../../common/apiClient';
+import { useNavigate, useParams } from "react-router-dom";
 
 const ResumeEditForm = ({ savedData }) => {
     // 기존 저장된 데이터로 초기화
     const [title, setTitle] = useState('');
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState([{ taggingId: 0, tagName: '' }]);
     const [tagInput, setTagInput] = useState('');
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState([{ attachmentId: 0, fileName: '', url: '' }]);
     const [formData, setFormData] = useState({
         organization: '',
         url: '',
@@ -17,24 +19,75 @@ const ResumeEditForm = ({ savedData }) => {
         details: ''
     });
     const [questions, setQuestions] = useState([{ question: '', answer: '' }]);
+    const navigate = useNavigate();
+    const { resumeId } = useParams(); // URL에서 resumeId 가져오기
+    const [error, setError] = useState(null);
+
+    //폼데이터를 json으로 변환하기 위한 객체 생성 
+    const formatToJson = (title, tags, formData, questions) => {
+        //자소서 질문, 답변 format 생성
+        // const coverLetterDTOS = questions.map(coverLetter => {
+        //     return {
+        //         question: coverLetter['question'],
+        //         answer: coverLetter['answer']
+        //     };
+        // });
+
+        const requestData = {
+            title: title,
+            tags: tags,
+            organization: formData.organization,
+            orgURl: formData.url,
+            applyStart: formData.applyStart,
+            applyEnd: formData.applyEnd,
+            coverLetterDTOS: questions
+        }
+
+        return requestData;
+    }
+
+    //지원서 수정 api 호출 
+    const updateResume = async () => {
+        const requestData = formatToJson(title, tags, formData, questions)
+
+        const fd = new FormData();
+        const jsonBlob = new Blob([JSON.stringify(requestData)/*Json으로 변환하는 함수*/], { type: 'application/json' });
+        fd.append('request', jsonBlob);
+
+        // 파일 추가 (Content-Type: multipart/form-data 자동 설정)
+        files.forEach(file => {
+            fd.append('files', file.file);
+        });
+
+        try {
+            const response = await apiClient.patch(
+                `api/resumes/${resumeId}`,
+                fd,
+                { withCredentials: true }
+            )
+
+            return response.data.result.resumeId;
+        } catch (err) {
+            setError(err.message || '지원서 수정을 실패했습니다');
+            console.error('지원서 수정 에러:', err);
+        }
+    }
 
     // 저장된 데이터로 초기화
     useEffect(() => {
         if (savedData) {
             setTitle(savedData.title || '');
             setTags(savedData.tags || []);
-            setFiles(savedData.files || []);
+            setFiles(savedData.attachments || []);
             setFormData({
-                organization: savedData.organization || '',
-                url: savedData.url || '',
+                organization: savedData.org || '',
+                url: savedData.orgUrl || '',
                 applyStart: savedData.applyStart || '',
                 applyEnd: savedData.applyEnd || '',
-                introduction: savedData.introduction || '',
-                details: savedData.details || ''
             });
 
-            if (savedData.questions && savedData.questions.length > 0) {
-                setQuestions(savedData.questions);
+            if (savedData.coverLetters && savedData.coverLetters.length > 0) {
+                setQuestions(savedData.coverLetters);
             }
         }
     }, [savedData]);
@@ -54,9 +107,20 @@ const ResumeEditForm = ({ savedData }) => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('지원서가 수정되었습니다.');
+
+        try {
+            const resumeId = await updateResume();
+            if (resumeId) {
+                navigate(`/resume/${resumeId}`);
+                alert('지원서가 수정되었습니다.');
+            } else {
+                alert('저장 중 오류가 발생했습니다.');
+            }
+        } catch (error) {
+            alert('저장 중 오류가 발생했습니다: ' + error.message);
+        }
     };
 
     const removeFile = (index) => {
@@ -67,7 +131,8 @@ const ResumeEditForm = ({ savedData }) => {
 
     const addTag = () => {
         if (tagInput.trim() !== '') {
-            setTags([...tags, tagInput.trim()]);
+            const newTag = { taggingId: null, tagName: tagInput.trim() }
+            setTags([...tags, newTag]);
             setTagInput('');
         }
     };
@@ -96,9 +161,13 @@ const ResumeEditForm = ({ savedData }) => {
         }
     };
 
+    const goToBack = () => {
+        navigate(`/resume/${resumeId}`);
+    }
+
     return (
         <div className="application-container">
-            <button className='back-btn'>
+            <button className='back-btn' onClick={goToBack}>
                 <ChevronLeft size={40} viewBox='8 0 24 24' />
             </button>
             <div>
@@ -128,9 +197,9 @@ const ResumeEditForm = ({ savedData }) => {
             {tags.length > 0 && (
                 <div className="tag-container">
                     {tags.map((tag, index) => (
-                        <div key={index} className="tag-item" >
-                            <span>{tag}</span>
-                            <button className="remove-tag" onClick={() => removeTag(index)}>×</button>
+                        <div key={tag.index} className="tag-item" >
+                            <span>{tag.tagName}</span>
+                            <button className="remove-tag" onClick={() => removeTag(tag.index)}>×</button>
                         </div>
                     ))}
                 </div>
@@ -153,7 +222,7 @@ const ResumeEditForm = ({ savedData }) => {
                 <div className="attached-files">
                     {files.map((file, index) => (
                         <div key={index} className="file-item">
-                            <span className="file-name">{file}</span>
+                            <span className="file-name">{file.fileName}</span>
                             <button className="remove-file" onClick={() => removeFile(index)}>×</button>
                         </div>
                     ))}

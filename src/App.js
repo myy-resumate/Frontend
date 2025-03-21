@@ -39,7 +39,7 @@ function App() {
         <Route path="/repo" element={<ResumeRepo />} />
         <Route path="/resume/:resumeId" element={<ResumeCom />} />
         <Route path="/resume-form" element={<ResumeFormCom />} />
-        <Route path="/edit" element={<ResumeEditFormCom />} />
+        <Route path="/edit/:resumeId" element={<ResumeEditFormCom />} />
       </Routes>
     </BrowserRouter>
   );

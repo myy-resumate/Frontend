@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './Resume.css';
 import { Paperclip, Download } from 'lucide-react';
 import apiClient from '../../common/apiClient';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Resume = () => {
     const { resumeId } = useParams(); // URL에서 resumeId 가져오기
-    const [resume, setResume] = useState(null);  //객체는 초기화 어케하지 
+    const [resume, setResume] = useState(null);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const fetchResume = async (resumeId) => {
         try {
@@ -19,7 +20,7 @@ const Resume = () => {
             setResume(response.data.result);
             setError(null);
         } catch (err) {
-            setError(err.message || '지원원를 불러오는데 실패했습니다');
+            setError(err.message || '지원서를 불러오는데 실패했습니다');
             console.error('지원서 로딩 에러:', err);
         }
     };
@@ -54,6 +55,10 @@ const Resume = () => {
         fetchResume(resumeId);
     }, [resumeId]);
 
+    const goToEdit = () => {
+        navigate(`/edit/${resumeId}`);
+    }
+
     return (
         <div className="application-container">
             <div className="application-header">
@@ -68,7 +73,7 @@ const Resume = () => {
                         ))}
                     </div>
                     <div className="application-actions">
-                        <span>수정</span>
+                        <span onClick={goToEdit}>수정</span>
                         <span className="divider">|</span>
                         <span>삭제</span>
                     </div>
