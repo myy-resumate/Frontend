@@ -34,9 +34,10 @@ const RecentResume = () => {
         <div className="recent-applications">
             <div className="applications-container">
                 <h2 className="applications-title">최근 조회한 지원서</h2>
-                <div className="applications-list">
-                    {documents.length > 0 ? (
-                        documents.map((doc) => (
+
+                {documents.length > 0 ? (
+                    <div className="applications-list">
+                        {documents.map((doc) => (
                             <div className="grid-item" key={doc.resumeId} >
                                 <button className="invisible-button" onClick={() => goToResume(doc.resumeId)}>
                                     <DocumentCard
@@ -49,13 +50,13 @@ const RecentResume = () => {
                                     />
                                 </button>
                             </div>
-                        ))
-                    ) : (
-                        <div className='no-data-box'>
-                            <p className="no-data">최근 조회한 지원서가 없습니다.</p>
-                        </div>
-                    )}
-                </div>
+                        ))}</div>
+                ) : (
+                    <div className='no-data-box'>
+                        <p className="no-data">최근 조회한 지원서가 없습니다.</p>
+                    </div>
+                )}
+
             </div>
         </div>
     );

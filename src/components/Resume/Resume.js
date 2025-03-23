@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Resume.css';
-import { Paperclip, Download } from 'lucide-react';
+import { Paperclip, Download, ChevronLeft } from 'lucide-react';
 import apiClient from '../../common/apiClient';
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -77,8 +77,15 @@ const Resume = () => {
         }
     }
 
+    const goToBack = () => {
+        navigate("/repo");
+    }
+
     return (
         <div className="application-container">
+            <button className='back-btn' onClick={goToBack}>
+                <ChevronLeft size={40} viewBox='8 0 24 24' />
+            </button>
             <div className="application-header">
                 <h1 className="application-title">{resume?.title}</h1>
                 <p className="application-date">작성 날짜: {formatDate(resume?.createdAt)}</p>

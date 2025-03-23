@@ -7,29 +7,39 @@ span {
     /* border: 1px solid red; */
 }
 
+.navbarContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+}
+
 .navbar {
     display: flex;
     gap: 30px;
     justify-content: space-between;
     /* 좌우로 공간을 균등하게 배분 */
     align-items: center;
-    padding: 4px 15%;
+    padding: 4px 0px;
 
+    min-width: 640px;
+    width: 1100px;
     height: 70px;
     /* 네비게이션 바의 고정 높이 설정 */
-    border-bottom: 1px solid #ddd;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    flex-grow: 0.5;
+    flex-grow: 0;
 
 }
 
 .logo button {
     border: none;
     background-color: transparent;
+    padding: 0px;
 }
 
 .logo img {
@@ -42,7 +52,7 @@ span {
 .menu {
     display: flex;
     gap: 40px;
-    flex-grow: 10;
+    flex-grow: 1;
 }
 
 .menu a {

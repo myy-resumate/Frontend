@@ -21,4 +21,16 @@ apiClient.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
+// //토큰 만료 시 수행할 로직 
+// api.interceptors.response.use(
+//     response => response,
+//     async error => {
+//       if (error.response?.status === 401) {
+//         await refreshAccessToken(); // 401 응답 시 자동으로 토큰 갱신
+//         return api(error.config); // 원래 요청 재시도
+//       }
+//       return Promise.reject(error);
+//     }
+//   );
+
 export default apiClient;

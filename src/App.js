@@ -16,6 +16,7 @@ import ResumeForm from "./components/ResumeForm/ResumeForm";
 import ResumeFormCom from "./components/ResumeForm/ResumeFormCom";
 import ResumeEditFormCom from "./components/ResumeEditForm/ResumeEditFormCom";
 import ScrollToTop from "./common/ScrollToTop";
+import ProtectedRoute from "./common/ProtectedRoute";
 
 function App() {
   return (
@@ -33,13 +34,13 @@ function App() {
         <Route path="/resform" element={<ResumeForm />} />
 
 
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/repo" element={<ResumeRepo />} />
-        <Route path="/resume/:resumeId" element={<ResumeCom />} />
-        <Route path="/resume-form" element={<ResumeFormCom />} />
-        <Route path="/edit/:resumeId" element={<ResumeEditFormCom />} />
+        <Route path="/repo" element={<ProtectedRoute><ResumeRepo /></ProtectedRoute>} />
+        <Route path="/resume/:resumeId" element={<ProtectedRoute><ResumeCom /></ProtectedRoute>} />
+        <Route path="/resume-form" element={<ProtectedRoute><ResumeFormCom /></ProtectedRoute>} />
+        <Route path="/edit/:resumeId" element={<ProtectedRoute><ResumeEditFormCom /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

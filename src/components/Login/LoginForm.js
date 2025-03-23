@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 네비게이션 훅 추가
+import { useNavigate, useLocation } from "react-router-dom"; // 네비게이션 훅 추가
 import styles from "./LoginForm.module.css"; // 스타일 파일 추가
 import { Helmet } from 'react-helmet';  //탭에 텍스트를 표시하기 위한 라이브러리
 import apiClient from '../../common/apiClient';
@@ -8,6 +8,10 @@ const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate(); // 네비게이션 함수
+    const location = useLocation();
+
+    // 로그인 후 리다이렉트할 경로 가져오기
+    const from = location.state?.from?.pathname || '/dashboard';
 
     const handleLoginForm = async () => {
         // 로그인 API 호출 로직
@@ -21,7 +25,7 @@ const LoginForm = () => {
 
             // 로컬 스토리지에 토큰 저장
             localStorage.setItem('accessToken', accessToken);
-            navigate('/');
+            navigate(from, { replace: true });
         } catch (error) {
             alert(`로그인 실패: ${error.response?.data?.message || '오류 발생'}`);
         }
