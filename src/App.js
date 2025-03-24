@@ -15,6 +15,7 @@ import ResumeCom from "./components/Resume/ResumeCom";
 import ResumeForm from "./components/ResumeForm/ResumeForm";
 import ResumeFormCom from "./components/ResumeForm/ResumeFormCom";
 import ResumeEditFormCom from "./components/ResumeEditForm/ResumeEditFormCom";
+import ComingSoon from "./components/ComingSoon/ComingSoon";
 import ScrollToTop from "./common/ScrollToTop";
 import ProtectedRoute from "./common/ProtectedRoute";
 
@@ -41,6 +42,8 @@ function App() {
         <Route path="/resume/:resumeId" element={<ProtectedRoute><ResumeCom /></ProtectedRoute>} />
         <Route path="/resume-form" element={<ProtectedRoute><ResumeFormCom /></ProtectedRoute>} />
         <Route path="/edit/:resumeId" element={<ProtectedRoute><ResumeEditFormCom /></ProtectedRoute>} />
+        <Route path="/ai" element={<ProtectedRoute><ComingSoon serviceName={'AI도구'} /></ProtectedRoute>} />
+        <Route path="/qna" element={<ProtectedRoute><ComingSoon serviceName={'Q&A'} /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
