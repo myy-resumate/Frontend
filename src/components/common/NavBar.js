@@ -6,10 +6,6 @@ import apiClient from "../../common/apiClient";
 const Navbar = () => {
     const navigate = useNavigate();
 
-    const goToHome = () => {
-        navigate("/");
-    };
-
     const handleLogout = async () => {
         try {
             await apiClient.post("/api/members/logout", {
@@ -27,11 +23,10 @@ const Navbar = () => {
         <div className={styles.navbarContainer}>
             <nav className={styles.navbar}>
                 <div className={styles.logo}>
-                    <button onClick={goToHome}>
-                        <img src="/navilogo.png" alt="Resumate Logo" height="40" />
-                    </button>
+                    <img src="/navilogo.png" alt="Resumate Logo" height="40" />
                 </div>
                 <div className={styles.menu}>
+                    <a href="/">홈</a>
                     <a href="/repo">저장소</a>
                     <a href="/ai">AI 도구</a>
                     <a href="/qna">Q&A</a>

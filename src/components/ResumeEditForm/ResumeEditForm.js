@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { FileUp, Plus, ChevronLeft } from 'lucide-react';
 import './ResumeEditForm.css';
 import apiClient from '../../common/apiClient';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
-const ResumeEditForm = ({ savedData }) => {
+const ResumeEditForm = () => {
     // 기존 저장된 데이터로 초기화
     const [title, setTitle] = useState('');
     const [tags, setTags] = useState([{ taggingId: 0, tagName: '' }]);
@@ -46,6 +46,10 @@ const ResumeEditForm = ({ savedData }) => {
         return requestData;
     }
 
+    //지원서 조회 화면에서 가져온 resume 데이터
+    const location = useLocation();
+    const resume = location.state?.resume;
+
     //지원서 수정 api 호출 
     const updateResume = async () => {
         const requestData = formatToJson(title, tags, formData, questions)
@@ -75,22 +79,22 @@ const ResumeEditForm = ({ savedData }) => {
 
     // 저장된 데이터로 초기화
     useEffect(() => {
-        if (savedData) {
-            setTitle(savedData.title || '');
-            setTags(savedData.tags || []);
-            setFiles(savedData.attachments || []);
+        if (resume) {
+            setTitle(resume.title || '');
+            setTags(resume.tags || []);
+            setFiles(resume.attachments || []);
             setFormData({
-                organization: savedData.org || '',
-                url: savedData.orgUrl || '',
-                applyStart: savedData.applyStart || '',
-                applyEnd: savedData.applyEnd || '',
+                organization: resume.org || '',
+                url: resume.orgUrl || '',
+                applyStart: resume.applyStart || '',
+                applyEnd: resume.applyEnd || '',
             });
 
-            if (savedData.coverLetters && savedData.coverLetters.length > 0) {
-                setQuestions(savedData.coverLetters);
+            if (resume.coverLetters && resume.coverLetters.length > 0) {
+                setQuestions(resume.coverLetters);
             }
         }
-    }, [savedData]);
+    }, [resume]);
 
     const handleFileChange = (e) => {
         if (e.target.files.length > 0) {

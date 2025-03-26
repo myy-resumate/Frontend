@@ -56,7 +56,7 @@ const Resume = () => {
     }, [resumeId]);
 
     const goToEdit = () => {
-        navigate(`/edit/${resumeId}`);
+        navigate(`/edit/${resumeId}`, { state: { resume } });
     }
 
     const deleteResume = async () => {

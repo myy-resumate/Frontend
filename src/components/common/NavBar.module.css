@@ -36,12 +36,6 @@ span {
 
 }
 
-.logo button {
-    border: none;
-    background-color: transparent;
-    padding: 0px;
-}
-
 .logo img {
     width: 140px;
     /* 원하는 크기로 설정 */
