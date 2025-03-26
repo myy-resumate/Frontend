@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./NavBar.module.css";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../common/apiClient";
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const [name, setName] = useState('');
 
     const handleLogout = async () => {
         try {
@@ -18,6 +19,24 @@ const Navbar = () => {
             console.error("로그아웃 실패:", error);
         }
     };
+
+    const fetchName = async () => {
+        try {
+            const response = await apiClient.get(
+                '/api/members/names',
+                { withCredentials: true }
+            )
+
+            setName(response.data.result.name);
+        } catch (error) {
+            setName('알 수 없음');
+            console.error('이름 불러오기 실패:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchName();
+    }, []);
 
     return (
         <div className={styles.navbarContainer}>
@@ -35,7 +54,7 @@ const Navbar = () => {
                     <button className={styles.authButton} onClick={handleLogout}>로그아웃</button>
                 </div>
                 <div>
-                    <span>누렁이 님</span>
+                    <span>{name} 님</span>
                 </div>
             </nav >
         </div>

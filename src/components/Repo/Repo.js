@@ -14,6 +14,7 @@ const Repo = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [pageNum, setPageNum] = useState(0);
     const [hasMore, setHasMore] = useState(true);  //더보기 버튼 표시 여부
+    const [name, setName] = useState('');
 
     const navigate = useNavigate();
     //지원서 조회 화면으로 이동하는 함수 
@@ -167,9 +168,25 @@ const Repo = () => {
         }
     };
 
+    //닉네임 조회
+    const fetchName = async () => {
+        try {
+            const response = await apiClient.get(
+                '/api/members/names',
+                { withCredentials: true }
+            )
+
+            setName(response.data.result.name);
+        } catch (error) {
+            setName('알 수 없음');
+            console.error('이름 불러오기 실패:', error);
+        }
+    }
+
     //처음 렌더링 
     useEffect(() => {
         fetchDocuments();
+        fetchName();
     }, []);
 
     // 정렬 변경 처리
@@ -215,7 +232,7 @@ const Repo = () => {
     return (
         <div className="document-container">
             <div className="page-header">
-                <h1 className="page-title">누렁이님의 지원서 저장소</h1>
+                <h1 className="page-title">{name} 님의 지원서 저장소</h1>
                 <p className="page-description">햄매니저가 지원서를 체계적으로 보관합니다</p>
             </div>
 
