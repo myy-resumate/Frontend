@@ -13,7 +13,7 @@ const Signup = () => {
     const handleSignup = async () => {
         // 회원가입 API 호출 로직
         try {
-            const response = await apiClient.post('/api/members', {
+            await apiClient.post('/api/members', {
                 name,
                 email,
                 password,

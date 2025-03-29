@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ResumeEditForm from './ResumeEditForm';
 import Navbar from '../common/NavBar';
 import Footer from '../common/Footer';
