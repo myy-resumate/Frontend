@@ -27,8 +27,8 @@
       "react-app/jest"
     ],
     "rules": {
-      "react-hooks/exhaustive-deps": "warn", // 경고만 표시
-      "no-unused-vars": "warn" // 경고만 표시
+      "react-hooks/exhaustive-deps": "warn",
+      "no-unused-vars": "warn"
     }
   },
   "browserslist": {
