@@ -87,7 +87,7 @@ const Calendar = () => {
     //최초 렌더링 시에만 실행 - api 호출 
     useEffect(() => {
         fetchDatesForMonth(currentDate.getFullYear(), currentDate.getMonth());
-    }, []);
+    }, [currentDate]);
 
     //날짜에 api 데이터가 있는지 확인하는 함수 
     const getEventForDay = (day) => {
