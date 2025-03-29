@@ -81,6 +81,53 @@ const Resume = () => {
         navigate("/repo");
     }
 
+    const fileDownloadHandler = async (attachmentId, storedFileName) => {
+
+        try {
+            const response = await apiClient.get(`/api/attachments/${attachmentId}`, {
+                responseType: 'blob',
+                headers: {
+                    'Accept': 'application/octet-stream'
+                }
+            });
+
+            const fileName = storedFileName || 'download';
+
+            // Blob 생성 및 다운로드
+            const blob = new Blob([response.data], { type: response.headers['content-type'] });
+            const url = window.URL.createObjectURL(blob);  //blob데이터를 url로 생성 
+
+            // 다운로드 링크 생성
+            const link = document.createElement('a');  //메모리에 a태그 동적으로 생성 
+            link.href = url;  //a태그에 url 연결
+            link.download = fileName;  //파일명 설정 
+
+            // 링크를 body에 추가하고 클릭 이벤트 트리거
+            document.body.appendChild(link);
+            link.click();  //자동으로 링크를 클릭 
+
+            // 정리
+            document.body.removeChild(link);  //a태그 삭제
+            window.URL.revokeObjectURL(url);  //메모리에서 url 삭제 
+
+        } catch (error) {
+            console.error('파일 다운로드 중 오류 발생:', error);
+
+            if (apiClient.isAxiosError(error)) {
+                const errorResponse = error.response?.data;
+
+                // 오류 메시지 처리 (백엔드 ApiResponseDTO 구조에 맞춰)
+                if (errorResponse) {
+                    alert(`다운로드 오류: ${errorResponse.message || '파일을 다운로드할 수 없습니다.'}`);
+                } else {
+                    alert('파일 다운로드에 실패했습니다.');
+                }
+            } else {
+                alert('예상치 못한 오류가 발생했습니다.');
+            }
+        }
+    };
+
     return (
         <div className="application-container">
             <button className='back-btn' onClick={goToBack}>
@@ -116,7 +163,7 @@ const Resume = () => {
                                     {file.fileName}
                                 </div>
                             </span>
-                            <button className="download-btn">
+                            <button className="download-btn" onClick={() => fileDownloadHandler(file.attachmentId, file.fileName)}>
                                 <Download />
                             </button>
                         </div>
