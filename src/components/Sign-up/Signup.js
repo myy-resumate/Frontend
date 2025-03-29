@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css"; // 스타일 파일 추가
 import { Helmet } from 'react-helmet';
-import apiClient from "../../apiClient";
+import apiClient from '../../common/apiClient';
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {

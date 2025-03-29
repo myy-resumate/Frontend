@@ -15,10 +15,14 @@ import ResumeCom from "./components/Resume/ResumeCom";
 import ResumeForm from "./components/ResumeForm/ResumeForm";
 import ResumeFormCom from "./components/ResumeForm/ResumeFormCom";
 import ResumeEditFormCom from "./components/ResumeEditForm/ResumeEditFormCom";
+import ComingSoon from "./components/ComingSoon/ComingSoon";
+import ScrollToTop from "./common/ScrollToTop";
+import ProtectedRoute from "./common/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* 나중에 없앨 애들 */}
         <Route path="/navi" element={<Navbar />} />
@@ -31,13 +35,15 @@ function App() {
         <Route path="/resform" element={<ResumeForm />} />
 
 
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/repo" element={<ResumeRepo />} />
-        <Route path="/resume" element={<ResumeCom />} />
-        <Route path="/resume-form" element={<ResumeFormCom />} />
-        <Route path="/edit" element={<ResumeEditFormCom />} />
+        <Route path="/repo" element={<ProtectedRoute><ResumeRepo /></ProtectedRoute>} />
+        <Route path="/resume/:resumeId" element={<ProtectedRoute><ResumeCom /></ProtectedRoute>} />
+        <Route path="/resume-form" element={<ProtectedRoute><ResumeFormCom /></ProtectedRoute>} />
+        <Route path="/edit/:resumeId" element={<ProtectedRoute><ResumeEditFormCom /></ProtectedRoute>} />
+        <Route path="/ai" element={<ProtectedRoute><ComingSoon serviceName={'AI도구'} /></ProtectedRoute>} />
+        <Route path="/qna" element={<ProtectedRoute><ComingSoon serviceName={'Q&A'} /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

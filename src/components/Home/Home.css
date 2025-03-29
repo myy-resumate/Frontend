@@ -8,7 +8,7 @@
 .calendar-deadlinelist {
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    gap: 20px;
     justify-content: center;
     width: 1032.5px;
     margin: 0 auto;
@@ -25,17 +25,26 @@
 
 @media (max-width: 1100px) {
     .calendar-deadlinelist {
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
     }
 
-    .calendar-container {
+    .calendar {
+        width: 100%;
+        max-width: 600px;
+        justify-content: center;
+    }
+
+    .deadlineList {
+        margin: 0 auto;
         width: 100%;
         max-width: 600px;
     }
 
     .job-listings-container {
-        margin: 0 auto;
-        width: 100%;
-        max-width: 300px;
+        margin-top: 50px;
     }
 }

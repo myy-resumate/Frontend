@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Calendar.css'; // CSS 파일 import
-import apiClient from '../../apiClient';
+import apiClient from '../../common/apiClient';
 
 const Calendar = () => {
     const [currentDate, setCurrentDate] = useState(new Date()); // 오늘 날짜의 년도, 월

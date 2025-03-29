@@ -17,13 +17,13 @@
 }
 
 .applications-list {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 25px;
 }
 
 .no-data-box {
-    width: 1100px;
+    max-width: 1100px;
     height: 172px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -31,4 +31,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.invisible-button {
+    all: unset;
+    /* 기본 스타일 제거 */
+    width: 100%;
+    /* 부모 크기에 맞춤 */
+    height: 100%;
+    cursor: pointer;
+    /* 클릭 가능하게 유지 */
 }

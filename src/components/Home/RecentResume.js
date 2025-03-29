@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import "./RecentResume.css";
 import DocumentCard from "../Repo/DocumentCard";
-import apiClient from "../../apiClient";
+import apiClient from "../../common/apiClient";
+import { useNavigate } from "react-router-dom";
+
 
 const RecentResume = () => {
     const [documents, setDocuments] = useState([]);
+    const navigate = useNavigate();
 
     // API 호출 함수
     useEffect(() => {
@@ -22,29 +25,38 @@ const RecentResume = () => {
         fetchRecentResumes();
     }, []);
 
+    //지원서 조회 화면으로 이동하는 함수 
+    const goToResume = async (resumeId) => {
+        navigate(`/resume/${resumeId}`);
+    }
+
     return (
         <div className="recent-applications">
             <div className="applications-container">
                 <h2 className="applications-title">최근 조회한 지원서</h2>
-                <div className="applications-list">
-                    {documents.length > 0 ? (
-                        documents.map((doc) => (
-                            <div className="grid-item" key={doc.id}>
-                                <DocumentCard
-                                    title={doc.title}
-                                    date={doc.createDate}
-                                    company={doc.organization}
-                                    applyStart={doc.applyStart}
-                                    applyEnd={doc.applyEnd}
-                                />
+
+                {documents.length > 0 ? (
+                    <div className="applications-list">
+                        {documents.map((doc) => (
+                            <div className="grid-item" key={doc.resumeId} >
+                                <button className="invisible-button" onClick={() => goToResume(doc.resumeId)}>
+                                    <DocumentCard
+                                        tagName={doc.tags}
+                                        title={doc.title}
+                                        createDate={doc.createDate}
+                                        organization={doc.organization}
+                                        applyStart={doc.applyStart}
+                                        applyEnd={doc.applyEnd}
+                                    />
+                                </button>
                             </div>
-                        ))
-                    ) : (
-                        <div className='no-data-box'>
-                            <p className="no-data">최근 조회한 지원서가 없습니다.</p>
-                        </div>
-                    )}
-                </div>
+                        ))}</div>
+                ) : (
+                    <div className='no-data-box'>
+                        <p className="no-data">최근 조회한 지원서가 없습니다.</p>
+                    </div>
+                )}
+
             </div>
         </div>
     );
