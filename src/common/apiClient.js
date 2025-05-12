@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: 'https://hamzzi.store'
-    //baseURL: 'http://localhost:8080'
+    baseURL: process.env.REACT_APP_API_BASE_URL
 });
 
 // 요청 인터셉터 추가: 모든 요청에 JWT 포함
