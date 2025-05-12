@@ -18,6 +18,8 @@ import ResumeEditFormCom from "./components/ResumeEditForm/ResumeEditFormCom";
 import ComingSoon from "./components/ComingSoon/ComingSoon";
 import ScrollToTop from "./common/ScrollToTop";
 import ProtectedRoute from "./common/ProtectedRoute";
+import AiTool from "./components/AiTool/AiTool";
+import AiToolCom from "./components/AiTool/AiToolCom";
 
 function App() {
   return (
@@ -33,7 +35,7 @@ function App() {
         <Route path="/repository" element={<Repo />} />
         <Route path="/res" element={<Resume />} />
         <Route path="/resform" element={<ResumeForm />} />
-
+        <Route path="/aiTool" element={<AiTool />} />
 
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/sign-up" element={<Signup />} />
@@ -42,7 +44,7 @@ function App() {
         <Route path="/resume/:resumeId" element={<ProtectedRoute><ResumeCom /></ProtectedRoute>} />
         <Route path="/resume-form" element={<ProtectedRoute><ResumeFormCom /></ProtectedRoute>} />
         <Route path="/edit/:resumeId" element={<ProtectedRoute><ResumeEditFormCom /></ProtectedRoute>} />
-        <Route path="/ai" element={<ProtectedRoute><ComingSoon serviceName={'AI도구'} /></ProtectedRoute>} />
+        <Route path="/ai" element={<ProtectedRoute><AiToolCom /></ProtectedRoute>} />
         <Route path="/qna" element={<ProtectedRoute><ComingSoon serviceName={'Q&A'} /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
