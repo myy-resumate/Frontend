@@ -5,7 +5,6 @@ import Footer from "../common/Footer";
 import Calendar from "./Calendar";
 import DeadlineList from "./DeadlineList";
 import RecentResume from "./RecentResume";
-
 import { Helmet } from 'react-helmet';
 import "./Home.css";
 
@@ -20,13 +19,13 @@ const Home = () => {
             <Navbar />
 
             {/* 메인 컨텐츠 영역 */}
-            <div className="calender-deadlinelist" style={{ display: "flex", flexDirection: "column", gap: "150px" }}>
+            <div className="home-main">
                 {/* Calendar와 DeadlineList를 가로로 배치 */}
-                <div style={{ display: "flex", gap: "20px" }}>
-                    <div style={{ flex: 1.5 }}>
+                <div className="calendar-deadlinelist">
+                    <div className="calendar">
                         <Calendar />
                     </div>
-                    <div style={{ flex: 1 }}>
+                    <div className="deadlineList">
                         <DeadlineList />
                     </div>
                 </div>

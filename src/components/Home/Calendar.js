@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Calendar.css'; // CSS 파일 import
+import apiClient from '../../common/apiClient';
 
 const Calendar = () => {
-    const [currentDate, setCurrentDate] = useState(new Date(2025, 0)); // 2025년 1월
-    const [selectedDate, setSelectedDate] = useState(1); // 1일 선택
+    const [currentDate, setCurrentDate] = useState(new Date()); // 오늘 날짜의 년도, 월
+    const [selectedDate, setSelectedDate] = useState(new Date().getDate()); // 오늘 날짜의 일 
+
+    const [apiDates, setApiDates] = useState([]); //api에서 받은 날짜 목록
+    const [isLoading, setIsLoading] = useState(false); //로딩 상태태
+
+    // [추가] 툴팁 위치 상태 추가
+    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+    // [추가] 활성화된 툴팁 정보 상태 추가
+    const [activeTooltip, setActiveTooltip] = useState(null);
 
     // 요일 이름
     const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
@@ -20,12 +29,89 @@ const Calendar = () => {
 
     // 이전 달
     const prevMonth = () => {
-        setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+        // setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+        const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1);
+        setCurrentDate(newDate);
+        fetchDatesForMonth(newDate.getFullYear(), newDate.getMonth()); //이전 달 데이터 api 호출 
     };
 
     // 다음 달
     const nextMonth = () => {
-        setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+        // setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+        const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
+        setCurrentDate(newDate);
+        fetchDatesForMonth(newDate.getFullYear(), newDate.getMonth()); //다음 달 데이터 api 호출
+    };
+
+    //API에서 해당 월의 데이터 가져오기
+    const fetchDatesForMonth = async (year, month) => {
+        try {
+            setIsLoading(true);  //로딩 상태 
+            // axios를 사용한 API 호출
+            const response = await apiClient.get('/api/home/resumes/calendar', {
+                params: {
+                    startDate: `${year}-0${month + 1}-01`
+                },
+                withCredentials: true
+            });
+
+            // [수정] API 응답 데이터 처리 방식 변경 - 날짜별로 여러 이벤트 그룹화
+            const formattedDates = {};
+
+            response.data.result.dateDTOS.forEach(item => {
+                const date = new Date(item.applyEnd);
+                const day = date.getDate();
+
+                if (!formattedDates[day]) {
+                    formattedDates[day] = [];
+                }
+
+                // 기업명 추가
+                formattedDates[day].push(item.organization);
+            });
+
+            // 객체를 배열로 변환
+            const datesArray = Object.keys(formattedDates).map(day => ({
+                day: parseInt(day),
+                events: formattedDates[day]
+            }));
+
+            setApiDates(datesArray);
+        } catch (error) {
+            console.error('API 호출 오류:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    //최초 렌더링 시에만 실행 - api 호출 
+    useEffect(() => {
+        fetchDatesForMonth(currentDate.getFullYear(), currentDate.getMonth());
+    }, [currentDate]);
+
+    //날짜에 api 데이터가 있는지 확인하는 함수 
+    const getEventForDay = (day) => {
+        return apiDates.find(date => date.day === day);
+    };
+
+    // [추가] 툴팁 표시 함수
+    const showTooltip = (event, day) => {
+        const eventData = getEventForDay(day);
+        if (eventData) {
+            setTooltipPosition({
+                x: event.clientX,
+                y: event.clientY
+            });
+            setActiveTooltip({
+                day: day,
+                events: eventData.events
+            });
+        }
+    };
+
+    // [추가] 툴팁 숨기기 함수
+    const hideTooltip = () => {
+        setActiveTooltip(null);
     };
 
     const year = currentDate.getFullYear();
@@ -48,6 +134,9 @@ const Calendar = () => {
             const isSelected = day === selectedDate;
             const isSunday = (day + firstDayOfMonth - 1) % 7 === 0;
 
+            const eventData = getEventForDay(day);
+            const hasEvent = !!eventData;
+
             let cellClassName = "calendar-cell";
             let dayClassName = "day-number";
 
@@ -55,11 +144,22 @@ const Calendar = () => {
                 dayClassName += " selected";
             }
 
+            if (isSunday) {
+                dayClassName += " sunday";
+            }
+
+            if (hasEvent) {
+                dayClassName += " has-event";
+            }
+
             cells.push(
                 <td key={day} className={cellClassName}>
                     <div
                         className={dayClassName}
                         onClick={() => setSelectedDate(day)}
+                        //title={hasEvent ? eventData.event : ''} //이벤트(org)가 있다면 툴팁으로 표시 
+                        onMouseEnter={(e) => showTooltip(e, day)}
+                        onMouseLeave={hideTooltip}
                     >
                         {day}
                     </div>
@@ -94,20 +194,44 @@ const Calendar = () => {
                 </div>
             </div>
 
-            <table className="calendar-table">
-                <thead>
-                    <tr>
-                        {weekdays.map((day, index) => (
-                            <th key={index} className="weekday-header">
-                                {day}
-                            </th>
+            {isLoading ? (
+                <div className="loading">데이터를 불러오는 중...</div>
+            ) : (
+                <table className="calendar-table">
+                    <thead>
+                        <tr>
+                            {weekdays.map((day, index) => (
+                                <th key={index} className="weekday-header">
+                                    {day}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {createCalendarRows()}
+                    </tbody>
+                </table>
+            )}
+
+            {/* [추가] 커스텀 툴팁 컴포넌트 */}
+            {activeTooltip && (
+                <div
+                    className="custom-tooltip"
+                    style={{
+                        top: `${tooltipPosition.y + 10}px`,
+                        left: `${tooltipPosition.x + 10}px`
+                    }}
+                >
+                    <div className="tooltip-header">
+                        {year}년 {month + 1}월 {activeTooltip.day}일 마감되는 공고
+                    </div>
+                    <ul className="tooltip-content">
+                        {activeTooltip.events.map((event, index) => (
+                            <li key={index}>• {event}</li>
                         ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {createCalendarRows()}
-                </tbody>
-            </table>
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };

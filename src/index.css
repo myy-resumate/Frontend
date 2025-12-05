@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* 다운받은 폰트 적용 */
+@font-face {
+
+  font-family: 'WantedSans';
+  /* 사용할 폰트의 이름을 정의 */
+
+  src: url('./fonts/WantedSans-Medium.otf');
+  /* 폰트 파일의 위치 */
+
+}
+
+/* 전체에 폰트 적용 */
+*,
+body {
+
+  font-family: 'WantedSans';
+
+}

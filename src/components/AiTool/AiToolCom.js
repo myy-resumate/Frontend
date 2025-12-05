@@ -1,22 +1,22 @@
 import React from "react";
-import Resume from "./Resume";
 import Navbar from "../common/NavBar";
 import Footer from "../common/Footer";
+import AiTool from "./AiTool";
 import { Helmet } from 'react-helmet';
 
-const ResumeCom = (resumeId) => {
+const AiToolCom = () => {
     return (
         <div>
             <Helmet>
-                <title>햄매니저 - 지원서</title>
+                <title>햄매니저 - AI도구</title>
                 <link rel="icon" href="/favicon.ico" />
             </Helmet>
 
             <Navbar />
-            <Resume resumeId={resumeId} />
+            <AiTool />
             <Footer />
         </div>
     );
 }
 
-export default ResumeCom;
+export default AiToolCom;

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FileUp, Plus, ChevronLeft } from 'lucide-react';
 import './ResumeForm.css';
+import apiClient from "../../common/apiClient";
+import { useNavigate } from "react-router-dom";
 
 const ResumeForm = () => {
     const [title, setTitle] = useState('');
@@ -12,16 +14,69 @@ const ResumeForm = () => {
         organization: '',
         url: '',
         applyStart: '',
-        applyEnd: '',
-        introduction: '',
-        details: ''
+        applyEnd: ''
     });
     const [questions, setQuestions] = useState([{ question: '', answer: '' }]);
+    const navigate = useNavigate();
 
+    //폼데이터를 json으로 변환하기 위한 객체 생성 
+    const formatToJson = (title, tags, formData, questions) => {
+        //자소서 질문, 답변 format 생성
+        const coverLetterDTOS = questions.map(coverLetter => {
+            return {
+                question: coverLetter['question'],
+                answer: coverLetter['answer']
+            };
+        });
+
+        const requestData = {
+            title: title,
+            tags: tags,
+            organization: formData.organization,
+            orgURl: formData.url,
+            applyStart: formData.applyStart,
+            applyEnd: formData.applyEnd,
+            coverLetterDTOS: coverLetterDTOS
+        }
+
+        return requestData;
+    }
+
+    //지원서 저장 api 호출
+    const saveResume = async () => {
+        const requestData = formatToJson(title, tags, formData, questions)
+
+        const fd = new FormData();
+        const jsonBlob = new Blob([JSON.stringify(requestData)/*Json으로 변환하는 함수*/], { type: 'application/json' });
+        fd.append('request', jsonBlob);
+
+        // 파일 추가 (Content-Type: multipart/form-data 자동 설정)
+        files.forEach(file => {
+            fd.append('files', file.file);
+        });
+
+        try {
+            const response = await apiClient.post(
+                "/api/resumes",
+                fd,
+                {
+                    withCredentials: true
+                }
+            )
+
+            return response.data.result.resumeId;
+        } catch (error) {
+            console.error('에러 발생:', error);
+        }
+    }
 
     const handleFileChange = (e) => {
         if (e.target.files.length > 0) {
-            const newFiles = [...files, e.target.files[0].name];
+            const file = e.target.files[0];
+            const newFiles = [...files, {
+                file: file,
+                name: file.name
+            }];
             setFiles(newFiles);
         }
     };
@@ -34,9 +89,19 @@ const ResumeForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('지원서가 저장되었습니다.');
+        try {
+            const resumeId = await saveResume();
+            if (resumeId) {
+                navigate(`/resume/${resumeId}`);
+                alert('지원서가 저장되었습니다.');
+            } else {
+                alert('저장 중 오류가 발생했습니다.');
+            }
+        } catch (error) {
+            alert('저장 중 오류가 발생했습니다: ' + error.message);
+        }
     };
 
     const removeFile = (index) => {
@@ -76,9 +141,13 @@ const ResumeForm = () => {
         }
     };
 
+    const goToBack = () => {
+        navigate("/repo");
+    }
+
     return (
         <div className="application-container">
-            <button className='back-btn'>
+            <button className='back-btn' onClick={goToBack}>
                 <ChevronLeft size={40} viewBox='8 0 24 24' />
             </button>
             <div>
@@ -133,7 +202,7 @@ const ResumeForm = () => {
                 <div className="attached-files">
                     {files.map((file, index) => (
                         <div key={index} className="file-item">
-                            <span className="file-name">{file}</span>
+                            <span className="file-name">{file.name}</span>
                             <button className="remove-file" onClick={() => removeFile(index)}>×</button>
                         </div>
                     ))}

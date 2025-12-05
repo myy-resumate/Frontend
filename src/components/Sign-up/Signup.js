@@ -1,15 +1,29 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css"; // 스타일 파일 추가
 import { Helmet } from 'react-helmet';
+import apiClient from '../../common/apiClient';
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    const handleSignup = () => {
-        alert(`이름: ${name}, 이메일: ${email}, 비밀번호: ${password}`);
-        // 회원가입 API 호출 로직 추가 가능
+    const handleSignup = async () => {
+        // 회원가입 API 호출 로직
+        try {
+            await apiClient.post('/api/members', {
+                name,
+                email,
+                password,
+            });
+
+            alert('회원가입 성공');
+            navigate('/login');
+        } catch (error) {
+            alert(`회원가입 실패: ${error.response?.data?.message || '오류 발생'}`);
+        }
     };
 
     return (
