@@ -47,10 +47,12 @@ const Calendar = () => {
     const fetchDatesForMonth = async (year, month) => {
         try {
             setIsLoading(true);  //로딩 상태 
+
             // axios를 사용한 API 호출
+            const monthStr = String(month + 1).padStart(2, '0');  //몇 월(자릿수 맞추기)
             const response = await apiClient.get('/api/home/resumes/calendar', {
                 params: {
-                    startDate: `${year}-0${month + 1}-01`
+                    startDate: `${year}-${monthStr}-01`
                 },
                 withCredentials: true
             });

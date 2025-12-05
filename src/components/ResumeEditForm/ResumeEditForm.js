@@ -25,13 +25,8 @@ const ResumeEditForm = () => {
 
     //폼데이터를 json으로 변환하기 위한 객체 생성 
     const formatToJson = (title, tags, formData, questions) => {
-        //자소서 질문, 답변 format 생성
-        // const coverLetterDTOS = questions.map(coverLetter => {
-        //     return {
-        //         question: coverLetter['question'],
-        //         answer: coverLetter['answer']
-        //     };
-        // });
+        // 빈 질문/답변 필터링
+        const filteredQuestions = questions.filter(q => q.question.trim() !== '' || q.answer.trim() !== '');
 
         const requestData = {
             title: title,
@@ -40,7 +35,7 @@ const ResumeEditForm = () => {
             orgURl: formData.url,
             applyStart: formData.applyStart,
             applyEnd: formData.applyEnd,
-            coverLetterDTOS: questions
+            coverLetterDTOS: filteredQuestions
         }
 
         return requestData;

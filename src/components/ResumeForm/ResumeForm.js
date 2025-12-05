@@ -20,12 +20,22 @@ const ResumeForm = () => {
     const navigate = useNavigate();
 
     //폼데이터를 json으로 변환하기 위한 객체 생성 
-    const formatToJson = (title, tags, formData, questions) => {
+    const formatToJson = (title, tags, formData, questions, files) => {
         //자소서 질문, 답변 format 생성
-        const coverLetterDTOS = questions.map(coverLetter => {
+        const coverLetterDTOS = questions
+            .filter(coverLetter => coverLetter.question.trim() !== '' || coverLetter.answer.trim() !== '')
+            .map(coverLetter => {
+                return {
+                    question: coverLetter['question'],
+                    answer: coverLetter['answer']
+                };
+            });
+
+        //파일 이름, 형식
+        const fileDTOS = files.map(fileDto => {
             return {
-                question: coverLetter['question'],
-                answer: coverLetter['answer']
+                fileName: fileDto.file.name,
+                contentType: fileDto.file.type
             };
         });
 
@@ -36,24 +46,69 @@ const ResumeForm = () => {
             orgURl: formData.url,
             applyStart: formData.applyStart,
             applyEnd: formData.applyEnd,
-            coverLetterDTOS: coverLetterDTOS
+            coverLetterDTOS: coverLetterDTOS,
+            fileDTOS: fileDTOS
         }
 
         return requestData;
     }
 
+    // S3에 파일 업로드
+    const uploadFilesToS3 = async (result) => {
+        try {
+            const uploadPromises = result.fileDTOS.map(async (fileDto, index) => {
+                const file = files[index].file;  //업로드할 파일
+                let response;
+                let success = false;
+
+                //업로드를 3번 시도
+                for (let attempt = 1; attempt <= 3; attempt++) {
+                    try {
+                        response = await fetch(fileDto.presignedUrl, {
+                            method: 'PUT',
+                            body: file,
+                        });
+
+                        if (response.ok) {
+                            success = true;
+                            break; // 업로드 성공 → 루프 종료
+                        }
+                    } catch (e) {
+                        // 네트워크 에러도 재시도 대상
+                    }
+
+                    console.warn(`업로드 실패 → 재시도 ${attempt}/3 : ${file.name}`);
+                }
+
+                //재시도해도 실패 
+                if (!success) {
+                    throw new Error(`파일 업로드 실패: ${file.name}`);
+                }
+                return response;
+            });
+
+            await Promise.all(uploadPromises);  //각 업로드를 동시에 실행하고, 다 끝날 때까지 기다리기 
+            console.log('모든 파일이 S3에 업로드되었습니다.');
+        } catch (error) {
+            console.error('S3 업로드 중 오류 발생:', error);
+            //s3 업로드 실패했으므로 이미 생성된 지원서 삭제
+            await apiClient.delete(
+                `api/resumes/${result.resumeId}`,
+                {
+                    withCredentials: true
+                }
+            )
+            throw new Error("파일 첨부에 실패했습니다.");
+        }
+    };
+
     //지원서 저장 api 호출
     const saveResume = async () => {
-        const requestData = formatToJson(title, tags, formData, questions)
+        const requestData = formatToJson(title, tags, formData, questions, files)
 
         const fd = new FormData();
         const jsonBlob = new Blob([JSON.stringify(requestData)/*Json으로 변환하는 함수*/], { type: 'application/json' });
         fd.append('request', jsonBlob);
-
-        // 파일 추가 (Content-Type: multipart/form-data 자동 설정)
-        files.forEach(file => {
-            fd.append('files', file.file);
-        });
 
         try {
             const response = await apiClient.post(
@@ -64,9 +119,18 @@ const ResumeForm = () => {
                 }
             )
 
-            return response.data.result.resumeId;
+            const result = response.data.result;
+            console.log(result.fileDTOS);
+
+            // presigned URL이 있으면 S3에 파일 업로드
+            if (result.fileDTOS.length > 0) {
+                await uploadFilesToS3(result);
+            }
+
+            return result.resumeId;
         } catch (error) {
             console.error('에러 발생:', error);
+            throw error;
         }
     }
 
@@ -89,10 +153,12 @@ const ResumeForm = () => {
         });
     };
 
+    //저장 동작
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const resumeId = await saveResume();
+
             if (resumeId) {
                 navigate(`/resume/${resumeId}`);
                 alert('지원서가 저장되었습니다.');
@@ -185,6 +251,7 @@ const ResumeForm = () => {
                 </div>
             )}
 
+            {/* 파일 첨부 */}
             <div className="file-upload">
                 <label htmlFor="file-input" className="file-label">
                     <FileUp />
